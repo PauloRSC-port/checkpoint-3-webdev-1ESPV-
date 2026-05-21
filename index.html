@@ -1,11 +1,54 @@
+
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LALALALAL</title>
+    <title>Checkpoint 3 - Painel e Magic</title>
+    <style>
+        /* Estilos básicos para organização e clareza visual */
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f9; color: #333; }
+        .container { display: flex; gap: 40px; flex-wrap: wrap; }
+        .secao { flex: 1; min-width: 300px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        form { margin-bottom: 20px; display: flex; gap: 10px; }
+        input[type="text"] { flex: 1; padding: 8px; }
+        button { padding: 8px 12px; cursor: pointer; background-color: #007bff; color: white; border: none; border-radius: 4px; }
+        button.btn-perigo { background-color: #dc3545; }
+        ul { list-style: none; padding: 0; }
+        li { background: #eee; margin-bottom: 8px; padding: 10px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; }
+        .data-hora { font-size: 0.8rem; color: #666; display: block; }
+        .carta-info { margin-top: 20px; border-top: 1px solid #ddd; padding-top: 15px; }
+        .carta-info img { max-width: 200px; display: block; margin-top: 10px; }
+        .erro { color: #dc3545; font-weight: bold; }
+    </style>
 </head>
 <body>
+
+    <h1>Checkpoint 3 - Web Development</h1>
     
+    <div class="container">
+        <!-- SEÇÃO 1: PAINEL DE ANOTAÇÕES -->
+        <div class="secao">
+            <h2>📝 Painel de Anotações</h2>
+            <form id="form-anotacao">
+                <input type="text" id="input-anotacao" placeholder="Digite sua anotação..." required>
+                <button type="submit">Adicionar</button>
+            </form>
+            <button id="btn-limpar-tudo" class="btn-perigo">Limpar Todas</button>
+            <ul id="lista-anotacoes"></ul>
+        </div>
+
+        <!-- SEÇÃO 2: CONSULTA MAGIC -->
+        <div class="secao">
+            <h2>🔮 Consulta de Cartas - Magic</h2>
+            <form id="form-magic">
+                <input type="text" id="input-busca-carta" placeholder="Nome da carta (em inglês)..." required>
+                <button type="submit">Buscar</button>
+            </form>
+            <div id="resultado-magic"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
