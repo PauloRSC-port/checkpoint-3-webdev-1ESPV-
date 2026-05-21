@@ -46,3 +46,68 @@ function renderizarAnotacao(anotacao) {
   const li = document.createElement('li');
   li.classList.add('anotacao-item');
   li.dataset.id = anotacao.id;
+
+  li.innerHTML = `
+    <div class="anotacao-conteudo">
+      <p class="anotacao-texto">${escapeHtml(anotacao.texto)}</p>
+      <p class="anotacao-data">${anotacao.data}</p>
+    </div>
+    <button class="btn btn-danger btn-excluir" title="Excluir anotação">✕</button>
+  `;
+ 
+  // Adiciona evento de exclusão individual ao botão
+  li.querySelector('.btn-excluir').addEventListener('click', () => excluirAnotacao(li));
+ 
+  listaAnotacoes.prepend(li); // Insere no topo da lista
+  atualizarMensagemVazia();
+}
+ 
+// ----------------------------------------------------------
+//  Adiciona uma nova anotação (disparado pelo botão ou Enter)
+// ----------------------------------------------------------
+function adicionarAnotacao() {
+  const texto = inputAnotacao.value.trim();
+ 
+  // Valida que o campo não está vazio
+  if (!texto) {
+    inputAnotacao.focus();
+    return;
+  }
+ 
+  // Monta o objeto da anotação com data/hora automáticas
+  const anotacao = {
+    id:    Date.now().toString(),       // ID único baseado no timestamp
+    texto,
+    data:  formatarDataHora(new Date()), // Data e hora atuais formatadas
+  };
+ 
+  renderizarAnotacao(anotacao);
+  salvarNoLocalStorage();
+ 
+  // Limpa o campo de texto após adicionar
+  inputAnotacao.value = '';
+  inputAnotacao.focus();
+}
+ 
+// ----------------------------------------------------------
+//  Remove uma anotação individual do DOM e do localStorage
+// ----------------------------------------------------------
+function excluirAnotacao(elemento) {
+  elemento.remove();
+  salvarNoLocalStorage();
+  atualizarMensagemVazia();
+}
+ 
+// ----------------------------------------------------------
+//  Limpa TODAS as anotações após confirmação do usuário
+// ----------------------------------------------------------
+function limparTodasAnotacoes() {
+  // Exibe caixa de confirmação antes de apagar tudo
+  const confirmado = confirm('Tem certeza que deseja apagar todas as anotações? Esta ação não pode ser desfeita.');
+ 
+  if (confirmado) {
+    listaAnotacoes.innerHTML = ''; // Remove tudo do DOM
+    localStorage.removeItem(STORAGE_KEY); // Remove do localStorage
+    atualizarMensagemVazia();
+  }
+}
